@@ -100,6 +100,8 @@
   const STEP_OF = { screen1: 1, screen2: 2, screenAnalyzing: 2, screenResults: 3, screenHistory: 0 };
 
   function show(id) {
+    // The error banners sit outside the screens, so clear them when the screen changes
+    for (const n of [1, 2]) { const e = $('#error' + n); e.hidden = true; e.textContent = ''; }
     for (const s of SCREENS) $('#' + s).hidden = s !== id;
     $('#rubberForm').hidden = !(id === 'screen1' || id === 'screen2');
     const step = STEP_OF[id];
@@ -247,7 +249,7 @@
 
   function validateStep1() {
     const f = form();
-    if (!f.elements.customerName.value.trim()) { f.elements.customerName.focus(); return 'กรุณากรอกชื่อเกษตรกร / สวนยาง'; }
+    if (!f.elements.customerName.value.trim()) { f.elements.customerName.focus(); return 'กรุณากรอกชื่อเกษตรกร / สวนยางก่อนไปขั้นตอนถัดไป'; }
     if (!f.elements.treeAge.value) { f.elements.treeAge.focus(); return 'กรุณาเลือกอายุต้นยาง'; }
     return '';
   }
